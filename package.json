@@ -1,14 +1,73 @@
 {
   "name": "@allejo/bzflag-plugin-manager",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "0.0.0",
+  "description": "A command-line utility for managing plugins in your BZFlag build system",
+  "author": "Vladimir Jimenez @allejo",
+  "bin": {
+    "bzpm": "./bin/run"
   },
-  "author": "CSUN IT",
+  "homepage": "https://github.com/allejo/bzflag-plugin-manager",
   "license": "MIT",
+  "main": "dist/index.js",
+  "repository": "allejo/bzflag-plugin-manager",
+  "files": [
+    "/bin",
+    "/dist",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
   "dependencies": {
+    "@oclif/core": "^1.22.0",
+    "@oclif/plugin-help": "^5",
+    "@oclif/plugin-plugins": "^2.1.9",
     "xcode": "^3.0.1"
-  }
+  },
+  "devDependencies": {
+    "@oclif/test": "^2.2.16",
+    "@types/chai": "^4",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.18.10",
+    "chai": "^4",
+    "eslint": "^7.32.0",
+    "eslint-config-oclif": "^4",
+    "eslint-config-oclif-typescript": "^1.0.3",
+    "mocha": "^9",
+    "oclif": "^3",
+    "shx": "^0.3.3",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.4"
+  },
+  "oclif": {
+    "bin": "bzpm",
+    "dirname": "bzpm",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "hello": {
+        "description": "Say hello to the world and others"
+      }
+    }
+  },
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint . --ext .ts --config .eslintrc",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "yarn lint",
+    "prepack": "yarn build && oclif manifest && oclif readme",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "bugs": "https://github.com/allejo/bzflag-plugin-manager/issues",
+  "keywords": [
+    "oclif"
+  ],
+  "types": "dist/index.d.ts"
 }
